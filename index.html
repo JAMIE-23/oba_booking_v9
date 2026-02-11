@@ -382,8 +382,8 @@ async function doBook(){
   S.loading=false;
   if(!r.success){S.error=r.error;render();return;}
   // 로컬 캐시 업데이트
-  S.student.remainingMakeup=r.remainingMakeup;
-  S.student.usedMakeup=S.student.maxMakeup-r.remainingMakeup;
+  S.student.usedMakeup++;
+  S.student.remainingMakeup=Math.max(0,Math.min(S.student.absenceCount,S.student.maxMakeup)-S.student.usedMakeup);
   S.bookings.push(r.booking);
   if(r.updatedSchedule){
     const idx=S.allSchedules.findIndex(s=>s.id===r.updatedSchedule.id);
